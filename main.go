@@ -16,10 +16,11 @@ func corsMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
-		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+		w.Header().Set("Access-Control-Max-Age", "86400")
 
 		if r.Method == "OPTIONS" {
-			w.WriteHeader(http.StatusOK)
+			w.WriteHeader(http.StatusNoContent)
 			return
 		}
 
@@ -45,6 +46,9 @@ func main() {
 	r.HandleFunc("/todos/{id}", todoHandler.GetTodo).Methods("GET")
 	r.HandleFunc("/todos/{id}", todoHandler.UpdateTodo).Methods("PUT")
 	r.HandleFunc("/todos/{id}", todoHandler.DeleteTodo).Methods("DELETE")
+	r.Methods("OPTIONS").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusNoContent)
+	})
 
 	port := ":8080"
 	fmt.Printf("Server starting on port %s\n", port)
