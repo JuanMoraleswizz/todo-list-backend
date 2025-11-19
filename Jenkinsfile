@@ -5,6 +5,7 @@ pipeline {
     }
 
     environment {
+        PATH = "/usr/local/bin:${env.PATH}"
         GO_VERSION = '1.21'
         DOCKER_IMAGE = 'todo-list-api'
         DOCKER_TAG = "${BUILD_NUMBER}"
@@ -16,7 +17,17 @@ pipeline {
                 checkout scm
             }
         }
-        
+
+        stage('Debug PATH') {
+            steps {
+                sh '''
+                    echo "PATH=$PATH"
+                    which docker || echo "docker NO encontrado"
+                    ls -l /usr/local/bin | grep docker || true
+                '''
+            }
+        }
+
         stage('Setup Go') {
             steps {
                 sh '''
