@@ -25,7 +25,7 @@ func (h *TodoHandler) GetTodos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("test")
+	fmt.Println("test 2")
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(todos)
