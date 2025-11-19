@@ -54,7 +54,8 @@ pipeline {
                 sh 'which go'
                 sh 'go version'
            }
-        
+        }
+
         stage('Deploy') {
             when {
                 branch 'main'
