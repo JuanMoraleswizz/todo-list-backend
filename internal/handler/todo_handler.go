@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"todo-list/internal/domain"
@@ -23,6 +24,8 @@ func (h *TodoHandler) GetTodos(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	fmt.Println("test")
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(todos)
