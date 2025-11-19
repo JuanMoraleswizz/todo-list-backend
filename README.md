@@ -11,6 +11,7 @@ Una API REST para gestionar tareas (todos) construida con Go usando Clean Archit
 - Migración automática de base de datos
 - Soporte CORS
 - Dockerizado con Docker Compose
+- Pipeline CI/CD con Jenkins
 
 ## API Endpoints
 
@@ -43,7 +44,27 @@ Una API REST para gestionar tareas (todos) construida con Go usando Clean Archit
 │   └── handler/         # Controladores HTTP
 ├── pkg/
 │   └── database/        # Configuración de BD
+├── Jenkinsfile         # Pipeline CI/CD
 └── main.go             # Punto de entrada
+```
+
+## Tests
+
+La aplicación incluye tests unitarios para todas las capas:
+
+### Ejecutar tests
+```bash
+go test ./...
+```
+
+### Ejecutar tests con cobertura
+```bash
+go test ./... -cover
+```
+
+### Ejecutar tests en modo verbose
+```bash
+go test ./... -v
 ```
 
 ## Ejecución local
@@ -93,3 +114,24 @@ curl -X DELETE http://localhost:8080/todos/1
 ```
 
 La aplicación estará disponible en http://localhost:8080
+
+## Pipeline CI/CD con Jenkins
+
+El proyecto incluye un `Jenkinsfile` que define un pipeline completo de CI/CD con las siguientes etapas:
+
+1. **Checkout** - Descarga el código fuente
+2. **Setup Go** - Configura el entorno Go y descarga dependencias
+3. **Test** - Ejecuta las pruebas unitarias
+4. **Build** - Compila la aplicación
+5. **Docker Build** - Construye las imágenes Docker
+6. **Deploy** - Despliega la aplicación (solo en rama main)
+
+### Configuración de Jenkins
+
+1. Crear un nuevo job tipo "Pipeline"
+2. Configurar el repositorio Git
+3. Seleccionar "Pipeline script from SCM"
+4. Asegurar que Jenkins tenga acceso a Docker
+5. Configurar las credenciales necesarias
+
+El pipeline se ejecutará automáticamente en cada push al repositorio.
