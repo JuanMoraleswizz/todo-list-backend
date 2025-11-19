@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        go "go"
+        go "GO"
     }
 
     environment {
