@@ -55,6 +55,7 @@ pipeline {
             steps {
                 sh 'which go'
                 sh 'go version'
+                echo 'test'
            }
         }
 
