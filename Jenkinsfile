@@ -3,6 +3,7 @@ pipeline {
     tools {
         go "go"
     }
+
     environment {
         GO_VERSION = '1.21'
         DOCKER_IMAGE = 'todo-list-api'
@@ -49,6 +50,7 @@ pipeline {
                 }
             }
         }
+
         stage('Debug') {
             steps {
                 sh 'which go'
